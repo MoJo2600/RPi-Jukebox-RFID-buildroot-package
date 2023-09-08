@@ -1,6 +1,20 @@
 # RPi-Jukebox-RFID-buildroot-package
 RPi-Jukebox-RFID-buildroot-package
 
+# Buildroot
+
+```
+wget https://buildroot.org/downloads/buildroot-2023.08.tar.gz
+tar xjfv buildroot-2023.08.tar.gz && rm buildroot-2023.08.tar.gz
+
+make -C buildroot BR2_EXTERNAL="$PWD/phoniebox" raspberrypi0w_defconfig
+make menuconfig
+```
+
+
+
+
+# Old Stuff
 
 ## UseCase
 I created this repo because we wanted to use Jukebox for RPi Zero W but unfortunately the start up timing was to slow for usage with children.
