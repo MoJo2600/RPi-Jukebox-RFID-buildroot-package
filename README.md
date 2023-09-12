@@ -7,10 +7,24 @@ RPi-Jukebox-RFID-buildroot-package
 wget https://buildroot.org/downloads/buildroot-2023.08.tar.gz
 tar xjfv buildroot-2023.08.tar.gz && rm buildroot-2023.08.tar.gz
 
+make -C buildroot BR2_EXTERNAL="$PWD/phoniebox"
 make -C buildroot BR2_EXTERNAL="$PWD/phoniebox" raspberrypi0w_defconfig
 make menuconfig
 ```
 
+## Save .config to defconfig
+
+To make your changes persistent to the defconfig file, don't forget to execute the command.
+
+```
+make -C buildroot make savedefconfig
+make -C buildroot make linux-update-config
+```
+
+## Misc
+
+* First boot takes a couple of seconds longer, because the FS is being expanded
+* Enable XZ compressed modules for kernel 6.1.x otherwise modules.dep is empty
 
 
 

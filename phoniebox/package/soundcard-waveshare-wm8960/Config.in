@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SOUNDCARD_WAVESHARE_WM8960
+	bool "soundcard_waveshare_wm8960"
+	select BR2_PACKAGE_DTC
+	select BR2_PACKAGE_DTC_PROGRAMS
+	help
+		Waveshare WM8960 audio hat.
+		The kernel driver is not working for me in kernel 6.1.x
