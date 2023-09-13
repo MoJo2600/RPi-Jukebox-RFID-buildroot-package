@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Set default configurations
+ASOUND_STATE=/var/lib/alsa/default-asound.state
+
+# Scanning the I2C bus for know addresses 
+is_1a=$(i2cdetect -y 1 0x1a 0x1a | egrep "(1a|UU)" | awk '{print $2}') # WM8960
+if [ "${is_1a}" == "1a" ] || [ "${is_1a}" == "UU" ] ; then
+    WM8960=found
+    echo "ReSpeaker 2-mic $WM8960"
+fi
+
+if [ "$WM8960" == "found" ] ; then
+    echo "Installing and configuring WM8960"
+    modprobe snd-soc-wm8960
+    OVERLAY=wm8960-soundcard
+    ASOUND_STATE=/etc/wm8960-soundcard/wm8960_asound.state
+    ASOUND_CONF=/etc/wm8960-soundcard/asound.conf
+fi
+
+# Remove old configurations
+if [ -f /var/lib/alsa/asound.state ] ; then
+    rm /var/lib/alsa/asound.state
+fi
+
+# Load overlay
+if [ "$OVERLAY" ]; then
+    echo Loading $OVERLAY ...
+    # Make sure the driver loads correctly
+    dtoverlay $OVERLAY || true
+fi
+
+echo "create wm8960-soundcard configure file"
+ln -s $ASOUND_CONF /etc/asound.conf
+
+# Install soundstate
+echo "create asound status file"
+ln -s $ASOUND_STATE /etc/asound.state
+
+# Restore sound levels
+alsactl -E HOME=/run/alsa -f /etc/asound.state restore
