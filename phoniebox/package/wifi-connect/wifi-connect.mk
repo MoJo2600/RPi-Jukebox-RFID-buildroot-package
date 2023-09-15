@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-WIFI_CONNECT_VERSION = ac333eb6a809b4daf3ac2e41f6c56799852caddc
+WIFI_CONNECT_VERSION = v4.11.3
 WIFI_CONNECT_SITE = $(call github,balena-io,wifi-connect,$(WIFI_CONNECT_VERSION))
 
 WIFI_CONNECT_DEPENDENCIES = host-rustc
@@ -14,7 +14,11 @@ WIFI_CONNECT_CARGO_ENV = CARGO_HOME=$(HOST_DIR)/share/cargo \
                      HOST_CC=gcc \
 		     PKG_CONFIG_ALLOW_CROSS=1 \
 		     OPENSSL_LIB_DIR=$(HOST_DIR)/lib \
-		     OPENSSL_INCLUDE_DIR=$(HOST_DIR)/include
+		     OPENSSL_INCLUDE_DIR=$(HOST_DIR)/include \
+			 CARGO_TARGET_ARMV7_UNKNOWN_LINUX_GNUEABIHF_LINKER=arm-buildroot-linux-gnueabihf-gcc \
+#			 CC_armv7_unknown_Linux_gnueabihf=arm-linux-gnueabihf-gcc \
+#			 CXX_armv7_unknown_linux_gnueabihf=arm-linux-gnueabihf-g++
+
 WIFI_CONNECT_BIN_DIR = target/$(RUSTC_TARGET_NAME)/release
 
 WIFI_CONNECT_CARGO_OPTS = \
@@ -33,5 +37,5 @@ define WIFI_CONNECT_INSTALL_TARGET_CMDS
 		$(TARGET_DIR)/usr/local/sbin/wifi-connect
 endef
 
-#$(eval $(generic-package))
-$(eval $(cargo-package))
+$(eval $(generic-package))
+#$(eval $(cargo-package))

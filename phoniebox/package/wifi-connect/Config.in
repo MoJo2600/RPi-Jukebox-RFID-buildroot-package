@@ -1,8 +1,8 @@
 config BR2_PACKAGE_WIFI_CONNECT
 	bool "wifi-connect"
-	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
+	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS BR2_PACKAGE_PYTHON_RUAMEL_YAML
 	select BR2_PACKAGE_HOST_RUSTC
-        help
+	help
 	  WiFi Connect is a utility for dynamically setting the 
 	  WiFi configuration on a Linux device via a captive portal. 
 	  WiFi credentials are specified by connecting with a 

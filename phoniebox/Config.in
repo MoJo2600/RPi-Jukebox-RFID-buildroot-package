@@ -1,6 +1,26 @@
-source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/phoniebox-webapp/Config.in"
-source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/wifi-connect/Config.in"
+menu "Phoniebox - RFID Music Player"
 
-menu "Sound"
-    source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/soundcard-waveshare-wm8960/Config.in"
+	config BR2_PACKAGE_PHONIEBOX
+		bool "phoniebox"
+		select BR2_PACKAGE_NODEJS
+		help
+		Implementation of the Phonibox/Jukebox from github.
+
+		https://rpi-jukebox-rfid.readthedocs.io/en/latest/index.html
+		https://github.com/net-attack/RPi-Jukebox-RFID-buildroot-package
+
+	source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/phoniebox-core/Config.in"
+	source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/phoniebox-webapp/Config.in"
+endmenu
+
+menu "Additional drivers, libraries and/or applications"
+#	source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/wifi-connect/Config.in"
+
+	menu "Sound Drivers"
+		source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/soundcard-waveshare-wm8960/Config.in"
+	endmenu
+endmenu
+
+menu "Additional external python modules"
+	source "$BR2_EXTERNAL_PHONIEBOX_PATH/package/python-pulsectl/Config.in"
 endmenu
