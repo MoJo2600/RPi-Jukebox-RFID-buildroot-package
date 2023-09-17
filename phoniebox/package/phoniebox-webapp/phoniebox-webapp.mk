@@ -19,9 +19,10 @@ define PHONIEBOX_WEBAPP_BUILD_CMDS
 	cd $(@D)/src/webapp; $(NPM) run build
 endef
 
-define PHONIEBOX_WEBAPP_INSTALL_TARGET_CMDSc
+define PHONIEBOX_WEBAPP_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/opt/webapp
 	# rm $(TARGET_DIR)/usr/html/*
+	$(INTALL) -D -m 0644 "$(BR2_EXTERNAL_PHONIEBOX_PATH)/package/phoniebox-core/nginx.conf /etc/nginx/nginx.conf
 	cp -r $(@D)/src/webapp/build/* $(TARGET_DIR)/opt/webapp;
 endef
 

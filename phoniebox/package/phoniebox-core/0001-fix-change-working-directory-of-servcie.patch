@@ -1,0 +1,28 @@
+From 9ce0860373e857389d0c54c3a6d93ac65c986e5f Mon Sep 17 00:00:00 2001
+From: Christian Erhardt <christian.erhardt@mojo2k.de>
+Date: Fri, 15 Sep 2023 13:29:21 +0200
+Subject: [PATCH] fix: change working directory of servcie
+
+Signed-off-by: Christian Erhardt <christian.erhardt@mojo2k.de>
+---
+ resources/default-services/jukebox-daemon.service | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/resources/default-services/jukebox-daemon.service b/resources/default-services/jukebox-daemon.service
+index cbdce1ad..1d45d853 100644
+--- a/resources/default-services/jukebox-daemon.service
++++ b/resources/default-services/jukebox-daemon.service
+@@ -10,8 +10,8 @@ After=network.target sound.target mpd.service pulseaudio.service
+ Requires=mpd.service pulseaudio.service
+ 
+ [Service]
+-ExecStart=/usr/bin/python3 run_jukebox.py
+-WorkingDirectory=/home/pi/RPi-Jukebox-RFID/src/jukebox
++ExecStart=/usr/bin/python3 run_jukebox.py -c /etc/jukebox/jukebox.yaml -l /etc/jukebox/logger.yaml
++WorkingDirectory=/opt/jukebox
+ StandardOutput=inherit
+ StandardError=inherit
+ Restart=always
+-- 
+2.34.1
+
